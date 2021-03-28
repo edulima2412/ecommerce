@@ -47,5 +47,11 @@ namespace Ecommerce.Controllers
             return View(pedido);
         }
 
+        [HttpPost]
+        public void UpdateQuantidade([FromBody]ItemPedido itemPedido)
+        {
+
+        }
+
     }
 }
