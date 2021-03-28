@@ -5,9 +5,9 @@ namespace CasaDoCodigo.Controllers
 {
     public class PedidoController : Controller
     {
-        private readonly IProdutoRepostory _produtoRepostory;
+        private readonly IProdutoRepository _produtoRepostory;
 
-        public PedidoController(IProdutoRepostory produtoRepostory)
+        public PedidoController(IProdutoRepository produtoRepostory)
         {
             _produtoRepostory = produtoRepostory;
         }

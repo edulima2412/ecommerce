@@ -12,9 +12,9 @@ namespace CasaDoCodigo
         class DataService : IDataService
         {
             private readonly ApplicationContext _context;
-            private readonly IProdutoRepostory _produtoRepostory;
+            private readonly IProdutoRepository _produtoRepostory;
 
-            public DataService(ApplicationContext context, IProdutoRepostory produtoRepostory)
+            public DataService(ApplicationContext context, IProdutoRepository produtoRepostory)
             {
                 _context = context;
                 _produtoRepostory = produtoRepostory;
