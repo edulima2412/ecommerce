@@ -1,6 +1,8 @@
 ﻿using Ecommerce.Models;
+using Ecommerce.Models.ViewModels;
 using Ecommerce.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Ecommerce.Controllers
 {
@@ -15,7 +17,7 @@ namespace Ecommerce.Controllers
         {
             _produtoRepository = produtoRepository;
             _pedidoRepository = pedidoRepository;
-            _itemPedidoRepository = itemPedidoRepository
+            _itemPedidoRepository = itemPedidoRepository;
         }
 
         public IActionResult Carrossel()
@@ -30,8 +32,9 @@ namespace Ecommerce.Controllers
                 _pedidoRepository.AddItem(codigo);
             }
 
-            Pedido pedido = _pedidoRepository.GetPedido();
-            return View(pedido.Itens);
+            List<ItemPedido> itens = _pedidoRepository.GetPedido().Itens;
+            CarrinhoViewModel carrinhoViewModel = new CarrinhoViewModel(itens);
+            return View(carrinhoViewModel);
         }
 
         public IActionResult Cadastro()
@@ -46,9 +49,9 @@ namespace Ecommerce.Controllers
         }
 
         [HttpPost]
-        public void UpdateQuantidade([FromBody]ItemPedido itemPedido)
+        public UpdateQuantidadeResponse UpdateQuantidade([FromBody]ItemPedido itemPedido)
         {
-            _itemPedidoRepository.UpdateQuantidade(itemPedido);
+            return _pedidoRepository.UpdateQuantidade(itemPedido);
         }
 
     }

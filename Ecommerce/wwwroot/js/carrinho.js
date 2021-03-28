@@ -2,11 +2,13 @@
 class Carrinho {
     clickIncremento(btn) {
         let data = this.getData(btn);
+        data.Quantidade++;
         this.postQuantidade(data);
     }
 
     clickDecremento(btn) {
         let data = this.getData(btn);
+        data.Quantidade--;
         this.postQuantidade(data);
     }
 
@@ -27,7 +29,14 @@ class Carrinho {
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data)
+        }).done(function (res) {
+            location.reload();
         });
+    }
+
+    updateQuantidade(input) {
+        let data = this.getData(input);
+        this.postQuantidade(data);
     }
 }
 
