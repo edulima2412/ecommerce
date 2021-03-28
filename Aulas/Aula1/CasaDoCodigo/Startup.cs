@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CasaDoCodigo.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CasaDoCodigo
 {
-    public class Startup
+    public partial class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -29,6 +30,9 @@ namespace CasaDoCodigo
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(connectionString)
             );
+
+            services.AddTransient<IDataService, DataService>();
+            services.AddTransient<IProdutoRepostory, ProdutoRepostory>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +58,7 @@ namespace CasaDoCodigo
             });
 
             // Garantir criação do banco
-            serviceProvider.GetService<ApplicationContext>().Database.MigrateAsync();
+            serviceProvider.GetService<IDataService>().InicializaDB();
         }
     }
 }
