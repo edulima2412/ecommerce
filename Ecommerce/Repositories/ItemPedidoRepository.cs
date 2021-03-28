@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Models;
+using System.Linq;
 
 namespace Ecommerce.Repositories
 {
@@ -15,7 +16,15 @@ namespace Ecommerce.Repositories
 
         public void UpdateQuantidade(ItemPedido itemPedido)
         {
-            throw new System.NotImplementedException();
+            var itemPedidoDB = dbSet
+                .Where(ip => ip.Id == itemPedido.Id)
+                .SingleOrDefault();
+
+            if (itemPedidoDB != null)
+            {
+                itemPedidoDB.AtualizaQuantidade(itemPedido.Quantidade);
+                contexto.SaveChanges();
+            }
         }
     }
 }
