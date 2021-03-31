@@ -19,7 +19,7 @@
             <div class="col-md-2 text-center">
                 Quantidade
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 text-center">
                 <span class="text-center">
                     Subtotal
                 </span>
@@ -53,9 +53,9 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <span class="pull-right" subtotal>
-                        R$ @(item.Quantidade * item.PrecoUnitario)
+                <div class="col-md-2 text-center">
+                    R$ <span class="pull-right" subtotal>
+                        @(item.Quantidade * item.PrecoUnitario)
                     </span>
                 </div>
             </div>
@@ -86,8 +86,8 @@
             <a class="btn btn-info" asp-action="carrossel">
                 + Produtos
             </a>
-            <a class="btn btn-success" asp-action="resumo">
-                Finalizar Pedido
+            <a class="btn btn-success" asp-action="cadastro">
+                Preencher Cadastro
             </a>
         </div>
     </div>

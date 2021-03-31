@@ -30,7 +30,19 @@ class Carrinho {
             contentType: 'application/json',
             data: JSON.stringify(data)
         }).done(function (res) {
-            location.reload();
+            let itemPedido = res.itemPedido;
+            let linhaDoItem = $('[item-id=' + itemPedido.id + ']');
+            linhaDoItem.find('input').val(itemPedido.quantidade);
+            linhaDoItem.find('[subtotal]').html((itemPedido.subtotal).duasCasas());
+
+            let carrinhoViewModel = res.carrinhoViewModel;
+
+            $('[numero-itens]').html('Total: ' + carrinhoViewModel.itens.length + ' itens');
+            $('[total]').html((carrinhoViewModel.total).duasCasas());
+
+            if (itemPedido.quantidade == 0) {
+                linhaDoItem.remove();
+            }
         });
     }
 
@@ -41,3 +53,7 @@ class Carrinho {
 }
 
 var carrinho = new Carrinho();
+
+Number.prototype.duasCasas = function () {
+    return this.toFixed(2).replace('.', ',');
+}

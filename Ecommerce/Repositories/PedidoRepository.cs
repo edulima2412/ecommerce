@@ -91,6 +91,11 @@ namespace Ecommerce.Repositories
             if (itemPedidoDB != null)
             {
                 itemPedidoDB.AtualizaQuantidade(itemPedido.Quantidade);
+
+                if (itemPedido.Quantidade == 0)
+                {
+                    _itemPedidoRepository.RemoveItemPedido(itemPedido.Id);
+                }
                 contexto.SaveChanges();
 
                 var carrinhoViewModel = new CarrinhoViewModel(GetPedido().Itens);
@@ -98,7 +103,7 @@ namespace Ecommerce.Repositories
                 return new UpdateQuantidadeResponse(itemPedidoDB, carrinhoViewModel);
             }
 
-            throw new ArgumentException("ItemPedido não encontrado")
+            throw new ArgumentException("ItemPedido não encontrado");
         }
     }
 }
