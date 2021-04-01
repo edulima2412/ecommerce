@@ -50,10 +50,15 @@ namespace Ecommerce.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Resumo(Cadastro cadastro)
         {
-            Pedido pedido = _pedidoRepository.GetPedido();
-            return View(pedido);
+            if(ModelState.IsValid)
+            {
+                return View(_pedidoRepository.UpdateCadastro(cadastro));
+            }
+            return RedirectToAction("Cadastro");
+
         }
 
         [HttpPost]

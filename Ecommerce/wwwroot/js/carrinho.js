@@ -1,26 +1,30 @@
-﻿
-class Carrinho {
-    clickIncremento(btn) {
-        let data = this.getData(btn);
+﻿class Carrinho {
+    clickIncremento(button) {
+        let data = this.getData(button);
         data.Quantidade++;
         this.postQuantidade(data);
     }
 
-    clickDecremento(btn) {
-        let data = this.getData(btn);
+    clickDecremento(button) {
+        let data = this.getData(button);
         data.Quantidade--;
+        this.postQuantidade(data);
+    }
+
+    updateQuantidade(input) {
+        let data = this.getData(input);
         this.postQuantidade(data);
     }
 
     getData(elemento) {
         var linhaDoItem = $(elemento).parents('[item-id]');
         var itemId = $(linhaDoItem).attr('item-id');
-        var novaQtd = $(linhaDoItem).find('input').val();
+        var novaQuantidade = $(linhaDoItem).find('input').val();
 
         return {
             Id: itemId,
-            Quantidade: novaQtd
-        }
+            Quantidade: novaQuantidade
+        };
     }
 
     postQuantidade(data) {
@@ -29,14 +33,12 @@ class Carrinho {
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(data)
-        }).done(function (res) {
-            let itemPedido = res.itemPedido;
-            let linhaDoItem = $('[item-id=' + itemPedido.id + ']');
+        }).done(function (response) {
+            let itemPedido = response.itemPedido;
+            let linhaDoItem = $('[item-id=' + itemPedido.id + ']')
             linhaDoItem.find('input').val(itemPedido.quantidade);
             linhaDoItem.find('[subtotal]').html((itemPedido.subtotal).duasCasas());
-
-            let carrinhoViewModel = res.carrinhoViewModel;
-
+            let carrinhoViewModel = response.carrinhoViewModel;
             $('[numero-itens]').html('Total: ' + carrinhoViewModel.itens.length + ' itens');
             $('[total]').html((carrinhoViewModel.total).duasCasas());
 
@@ -44,11 +46,6 @@ class Carrinho {
                 linhaDoItem.remove();
             }
         });
-    }
-
-    updateQuantidade(input) {
-        let data = this.getData(input);
-        this.postQuantidade(data);
     }
 }
 
